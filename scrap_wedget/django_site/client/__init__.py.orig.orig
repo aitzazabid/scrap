@@ -1,0 +1,172 @@
+
+import json
+def user_dictionary(user):
+    """
+	Return a dictionary containing standard information for a user, specifically:
+
+	id
+	name
+	img_url
+	bio (if 'bio' is True)
+	"""
+
+    profile = user.client_profile
+    img_url = profile.img.url() if profile.img else None
+    if not img_url and hasattr(user, 'facebook'):
+        img_url = user.facebook.get_profile_image()
+
+    d = {
+        'id': user.id,
+        'name': user.username,
+        'email': user.email,
+        'gender': profile.gender,
+        'dob': profile.date_of_birth,
+        'img_url': img_url,
+    }
+    return d
+
+
+def category_dictionary(category, all_categories):
+    """
+	Return a category dictionary.
+	"""
+    return {
+        'id': category.id,
+        'name': category.name,
+        'desc': category.desc,
+        'sort_priority': category.sort_priority,
+        'img_url': category.img
+    }
+
+
+def person_dictionary(person):
+    return {
+        'id': person.id,
+        'first_name': person.first_name,
+        'middle_name': person.middle_name,
+        'last_name': person.last_name,
+        'img': [person.img]
+    }
+
+
+def person_list(people):
+    """
+	return a list of people
+	"""
+    people_list = []
+    for person in people:
+        people_list.append(person_dictionary(person))
+    return people_list
+
+def image_list(images):
+    """
+    return a list of images
+    """
+    image_list = []
+    for image in images:
+        image_list.append(image.image)
+        return image_list
+
+
+def genre_dictionary(genre):
+    return {
+        'id': genre.id,
+        'name': genre.name
+    }
+def watch_dictionary(movie):
+    return{
+        'movie':movie.id,
+        'user':movie.id,
+        'rating':movie.rating,
+        'review':movie.review
+    }
+
+def genre_list(genres):
+
+    genre_list = []
+    for genre in genres:
+        genre_list.append(genre_dictionary(genre))
+
+        return genre_list
+
+
+
+
+def movie_dictionary(movie):
+    """
+	Return a movie dictionary for the passed group. This includes:
+
+    """
+
+    default_img_url = 'default_url'
+
+    try:
+        cover_img = movie.cover_img.image
+    except:
+        cover_img = default_img_url
+
+    try:
+        cover_img_landscape = movie.cover_img_landscape.image
+    except:
+         cover_img_landscape = default_img_url
+
+    try:
+        thumbnail_img = movie.thumbnail_img.image
+    except:
+        thumbnail_img =  movie.thumbnail_img.image
+
+    try:
+        thumbnail_img_landscape = movie.thumbnail_img_landscape.image
+    except:
+        thumbnail_img_landscape = default_img_url
+
+    try:
+        banner_img = movie.banner_img.image
+    except:
+        banner_img = default_img_url
+
+    try:
+        banner_img_landscape =  movie.banner_img_landscape.image
+    except:
+        banner_img_landscape = default_img_url
+
+
+    md = {
+        'id': movie.id,
+        'category_id': movie.category.id,
+        'title': movie.title,
+        'synopsis': movie.synopsis,
+        'length_in_minutes': movie.length_in_minutes,
+        'director': person_list(movie.director.all()),
+        'writer': person_list(movie.writer.all()),
+        'producer': person_list(movie.producer.all()),
+        'cast': person_list(movie.cast.all()),
+        'rating': movie.rating,
+
+        'cover_img': cover_img,
+        'cover_img_landscape': cover_img_landscape,
+        'thumbnail_img': thumbnail_img,
+        'thumbnail_img_landscape': thumbnail_img_landscape,
+        'banner_img': banner_img,
+        'banner_img_landscape': banner_img_landscape,
+        'genre': genre_list(movie.genre.all()),
+
+        'img': image_list(movie.screenshot_images.all()),
+        'sort_priority': movie.sort_priority,
+        'content_rating':movie.content_rating,
+        'popularity': movie.popularity,
+    }
+
+    return md
+
+
+def movie_url_dictionary(movie):
+    """
+	Return a movie dictionary with the playback URLs
+	"""
+    md = {
+        'id': movie.id,
+        'can_play': True,
+        'video_urls': [ {'HD':movie.url() for movie in movie.movie_files.all()} ]
+    }
+    return md

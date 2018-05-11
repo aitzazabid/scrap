@@ -1,0 +1,482 @@
+{% extends 'webadmin/base.html' %}
+{% load bootstrap_tags %}
+{% load static %}
+
+{% block auth_header %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<script src='https://code.jquery.com/jquery-3.1.1.min.js' integrity='sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=' crossorigin='anonymous'></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <style>
+    *{outline: 0 !important;}
+
+        header{
+            width: 100%;
+            background: #ffffff;
+            display: block;
+            color: #5773F7;
+            min-height:99px;
+        }
+    body{
+        background: #ffffff;
+    }
+    .landing-head{
+        padding: 30px 0;
+        text-align: center;
+    }
+    .landing-head h1{
+        font-size: 36px;
+        font-family: arial;
+        /*color: #2F5272;*/
+        text-align: center;
+    }
+    .landing-head p{
+        font-size: 18px;
+        color: #6D8093;
+        text-align: center;
+    }
+    h5{
+      color:  #2F5272;
+    }
+    .form-group label{
+        font-weight: 400;
+        color: #ccd5dc;
+    }
+
+.f_form {
+margin: 0 auto;
+width:250px;
+}
+.ff_form{
+    margin: 0 auto;
+    width: 407px;
+}
+.m_btm{
+        margin-bottom: 19px;
+}
+
+    .landing-main{
+        padding-bottom: 20px;
+        /*padding-left: 277px;*/
+        /*padding-right: 277px;*/
+    }
+    .landing-btn-main{padding: 0;}
+    .landing-btn-main button, .landing-btn-main button:hover,.landing-btn-main button:focus{
+        width: 100%;
+        text-align: center;
+        padding: 20px 10px;
+        /*background: #8dc0fa;*/
+        background:  #007FD1;
+        color: #ffffff;
+        border:none;
+        -webkit-box-shadow: 1px 3px 15px -7px rgba(0,0,0,0.75);
+        -moz-box-shadow: 1px 3px 15px -7px rgba(0,0,0,0.75);
+        box-shadow: 1px 3px 15px -7px rgba(0,0,0,0.75);
+    }
+    .header_text{margin-bottom: 10px;display: inline-block}
+    .plr{padding-left: 0;padding-right: 0}
+    .customBar{height: 6px;background: #cccccc}
+    .head-bar-main li{padding: 0;text-align: center}
+    .bar-point-1{border-radius: 10px 0 0 10px;}
+    .bar-point-4{border-radius: 0 10px 10px 0;}
+    @media (min-width: 1200px){
+     .container {
+            width: 900px;
+        }
+    }
+    .colorBlue{color: #ffffff;font-weight: 900;}
+    .bgBlue{background: #328AFF;}
+
+    .chkContainer {
+   display: inline;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 400;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser’s default radio button */
+.chkContainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.chkContainer:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.chkContainer input:checked ~ .checkmark {
+    background-color: #ffffff;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.chkContainer input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.chkContainer .checkmark:after {
+     top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #328AFF;
+}
+    .modal-footer{
+        padding: 15px;
+    text-align: center;
+    border: 0;
+
+    }
+    .review-box-main{
+        background: #ffffff;
+        border-radius: 6px;
+        padding: 15px;
+    }
+    .review-box-main div:first-of-type{margin-bottom: 10px;}
+    .review-box-main span.left,.review-box-main span.right{
+        width: 50%;
+        display: inline-block;
+    }
+    .review-box-main span.left{color: #cccccc;font-weight: 400;}
+    .review-box-main span.right{
+        text-align: right;
+    }
+
+
+    /*=========
+    checkbox styles
+    ===============*/
+    .chkboxContainer {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-weight: 400;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser’s default checkbox */
+.chkboxContainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.chkboxCheckmark{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #ffffff;
+}
+
+/* On mouse-over, add a grey background color */
+.chkboxContainer:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.chkboxContainer input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.chkboxCheckmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.chkboxContainer input:checked ~ .chkboxCheckmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.chkboxContainer .chkboxCheckmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid #2196F3;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.bg {
+    /* The image used */
+    background-image: url("/static/images/bg.png");
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.new_btn,.new_btn:hover,.new_btn:focus{
+            display: inline-block;
+        text-decoration: none;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    border-radius: 4px;
+    font-weight: 200;
+        }
+
+
+        .back-btn{
+            background: #ffffff;
+    color: #328AFF;
+    width: 100%;
+    height: 62px;
+    border-color: #5264AE;
+    line-height: 49px;
+        }
+        .group 			  {
+  position:relative;
+  margin-bottom:45px;
+}
+        .input-main{
+            padding-top: 20px;
+    overflow: hidden;
+}
+
+        input 				{
+  font-size:18px;
+  padding:10px 10px 10px 5px;
+  display:block;
+  /*width:350px;*/
+  border:none;
+  border-bottom:1px solid #dfdfdf;
+}
+input:focus 		{ outline:none; }
+
+/* LABEL ======================================= */
+label 				 {
+  color:#999;
+  font-size:18px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all;
+  -moz-transition:0.2s ease all;
+  -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+input:focus ~ label, input:valid ~ label 		{
+  top:-20px;
+  font-size:14px;
+  color:#5264AE;
+}
+
+/* BOTTOM BARS ================================= */
+.bar 	{ position:relative; display:block; width:350px; }
+.bar:before, .bar:after 	{
+  content:'';
+  height:2px;
+  width:0;
+  bottom:1px;
+  position:absolute;
+  background:#5264AE;
+  transition:0.2s ease all;
+  -moz-transition:0.2s ease all;
+  -webkit-transition:0.2s ease all;
+}
+.bar:before {
+  left:21.5%;
+}
+.bar:after {
+  right:50%;
+}
+
+/* active state */
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position:absolute;
+  height:60%;
+  width:100px;
+  top:25%;
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+/* active state */
+input:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+        .form-control{
+  background:transparent;
+   border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    border-radius :0;
+   box-shadow:inset 0 0 0 ;
+    -webkit-box-shadow:0 !important; ;
+
+}
+.form-control:focus {
+    /*border-color: #5264AE;*/
+    outline: 0;
+    box-shadow: none;
+    /*-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);*/
+    /*box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(111,22,36.6);*/
+}
+
+.central_align{
+    padding-left: 493px;
+    padding-right: 493px;
+}
+@font-face {
+ font-family: 'Gothamy';
+ src: local('Gotham Book'), local('Gotham-Book');
+ font-weight: normal;
+ font-style: normal;
+ font-variant: normal;
+}
+@font-face {
+ font-family: 'Gothamy';
+ src: local('Gotham Bold'), local('Gotham-Bold');
+ font-weight: bold;
+ font-style: normal;
+ font-variant: normal;
+}
+@font-face {
+ font-family: 'Gothamy';
+ src: local('Gotham Book Italic'), local('Gotham-BookItalic');
+ font-weight: normal;
+ font-style: italic;
+ font-variant: normal;
+}
+@font-face {
+ font-family: 'Gothamy';
+ src: local('Gotham Bold Italic'), local('Gotham-BoldItalic');
+ font-weight: bold;
+ font-style: italic;
+ font-variant: normal;
+}
+body {
+ font-family: Gothamy, Gotham-Book, Arial, sans-serif;
+}
+
+    </style>
+
+<header class=" bg">
+<div >
+
+    <nav >
+        <div style="width: 200px" class="col-md-3">
+            <a href="/" style="cursor: pointer"><img style="object-fit: contain; width:100%;padding-left: 10px;padding-top: 32px;" src="{% static 'images/logo.png' %}"></a>
+        </div>
+ <!--<div class="text-left" >-->
+            <!--<img style="object-fit: contain; width: 200px; padding-top: 100px;padding-left: 10px" src="{% static 'images/logo.png' %}">-->
+        <!--</div>-->
+        <div class="clearfix col-md-9" style="padding-top: 50px;">
+        <ul class="list-inline head-bar-main" >
+            <li class="col-md-3 col-sm-3 plr" style="text-align: left">
+                <span class="header_text barText1">Account Info</span>
+                <div class="customBar bar-point-1"></div>
+            </li>
+            <li class="col-md-3 col-sm-3 plr">
+                <span class="header_text barText2">Personal Info</span>
+            <div class="customBar bar-point-2"></div>
+            </li>
+            <li class="col-md-3 col-sm-3 plr">
+                <span class="header_text barText3">Identify</span>
+            <div class="customBar bar-point-3"></div>
+            </li>
+            <li class="col-md-3 col-sm-3 plr">
+               <span class="header_text barText14">Review and Submit</span>
+            <div class="customBar bar-point-4"></div>
+            </li>
+
+        </ul>
+        </div>
+    </nav>
+</div>
+</header>
+
+
+{% endblock %}
+

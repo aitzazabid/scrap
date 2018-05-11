@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cryptocapzone</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/main.css">
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<style>
+a{
+    text-decoration: none;
+    color: #000;
+}
+h2 {
+  text-align: center;
+}
+
+table caption {
+	padding: .5em 0;
+}
+
+@media screen and (max-width: 767px) {
+  table caption {
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.p {
+  text-align: center;
+  padding-top: 140px;
+  font-size: 14px;
+}
+.navbar{
+    background: #96BD8E;
+}
+.navbar li{
+    display: inline-block;
+}
+.menu a{
+  font-size: 18px;
+cursor: pointer;
+color: #E3E3E3;
+
+}
+.menu:hover a{
+color: #96BD8E;
+border-radius: 4px;
+}
+
+</style>
+<body>
+<nav class="navbar" style="border-radius: 0px;">
+  <div class="container">
+    <div class="navbar-header">
+
+       <img src="{% static 'images/mxc.png' %}" style="width:90px; padding:5px 0px; margin-left:-13px" />
+      <a class="navbar-brand" href="#">
+      </a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="menu"><a style="padding:35px 20px">Home</a></li>
+      <li class="menu"><a style="padding:35px 20px">About</a></li>
+      <li class="menu"><a style="padding:35px 20px">Contact Us</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+    <div class="text-center">
+        <h3>All coins</h3>
+    </div>
+<br>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="table-responsive ">
+        <table class="table table-bordered table-hover table-stripped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Market Cap</th>
+              <th>Price</th>
+              <th>Volume (24h)</th>
+              <th>Circulating Supply</th>
+              <th>Change (24h)</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for row in table_data %}
+            <tr>
+              <td>{{ row.rank }}</td>
+              <td>{{ row.name }}</td>
+              <td>{{ row.market_cap }}</td>
+              <td>{{ row.price }}</td>
+              <td>{{ row.volume_24 }}</td>
+              <td>{{ row.circulatory_supply }}</td>
+              <td>{{ row.change }}</td>
+
+            </tr>
+          {% endfor %}
+
+          </tbody>
+                 </table>
+      </div><!--end of .table-responsive-->
+    </div>
+  </div>
+</div>
+ <div class="navbar navbar-default" style="margin-bottom: 0px;">
+    <div class="container">
+      <p class="navbar-text pull-left">© 2018 - Project Of MyXavier Coinn.
+      </p>
+</div>
+</body>
+</html>
