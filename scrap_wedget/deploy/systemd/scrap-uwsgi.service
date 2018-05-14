@@ -1,0 +1,37 @@
+[Unit]
+Description=SCRAP uWSGI service
+After=syslog.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Restart=always
+RestartSec=2
+
+# Note that we run as www-data; safer than running as root and allows nginx
+# (which also runs as www-data) to access our socket file.
+User=www-data
+Group=www-data
+
+Type=notify
+KillSignal=SIGINT
+StandardError=syslog
+NotifyAccess=all
+RuntimeDirectory=scrap-uwsgi
+
+# Note that 'processes' defines the limit of simultaneous requests.
+ExecStart=/usr/local/bin/uwsgi \
+  --master \
+  --processes 8 \
+  --max-requests 10000 \
+  --module server.wsgi \
+  --pythonpath /scrap/scrap-wedget/django_site \
+  --socket /tmp/scrap-uwsgi.sock \
+  --enable-threads \
+  --single-interpreter \
+  --close-on-exec \
+  --stats 127.0.0.1:12001 \
+  --stats-http \
+  --memory-report \
+  --disable-logging
