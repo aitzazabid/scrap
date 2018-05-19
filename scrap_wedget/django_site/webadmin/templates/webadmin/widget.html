@@ -1,15 +1,12 @@
 {% load static %}
+{% load format_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Cryptocapzone</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles/main.css">
-    <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <style>
@@ -64,7 +61,7 @@ border-radius: 4px;
       </a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      <li class="menu"><a style="padding:35px 20px">Home</a></li>
+      <li class="menu active"><a style="padding:35px 20px">Home</a></li>
       <li class="menu"><a style="padding:35px 20px">About</a></li>
       <li class="menu"><a style="padding:35px 20px">Contact Us</a></li>
     </ul>
@@ -72,9 +69,17 @@ border-radius: 4px;
 </nav>
 
 <div class="container">
-    <div class="text-center">
-        <h3>All coins</h3>
+    <div class="text-center ">
+        <h3>Top 1000 coins</h3>
+
+    <form class="form-wrapper_search" onsubmit="return false">
+    <input type="text" id="search" class="form-control" placeholder="Search for..." required style="display:inline-block;width:auto">
+    <button class="btn" type="submit" id="search_go" style="background-color: #96BD8E; color: #ffffff">Go</button>
+        </form>
+
     </div>
+
+
 <br>
   <div class="row">
     <div class="col-xs-12">
@@ -83,31 +88,59 @@ border-radius: 4px;
           <thead>
             <tr>
               <th>#</th>
+              <th>Rank</th>
               <th>Name</th>
               <th>Market Cap</th>
               <th>Price</th>
               <th>Volume (24h)</th>
               <th>Circulating Supply</th>
               <th>Change (24h)</th>
+
             </tr>
           </thead>
           <tbody>
           {% for row in table_data %}
             <tr>
+              <td>{{ forloop.counter }}</td>
               <td>{{ row.rank }}</td>
               <td>{{ row.name }}</td>
-              <td>{{ row.market_cap }}</td>
-              <td>{{ row.price }}</td>
+              <td>{{ row.market_cap|currency }}</td>
+              <td>{{ row.price|currency }}</td>
               <td>{{ row.volume_24 }}</td>
-              <td>{{ row.circulatory_supply }}</td>
-              <td>{{ row.change }}</td>
+              <td>{{ row.circulatory_supply }}  {{ row.symbol }}</td>
+              <td >{% if "-" in row.change %}
+                  <span style="color: red">{{ row.change }} %</span>
+                  {% else %}
+                <span style="color: #96BD8E">{{ row.change }} %</span>
+                  {% endif %}
+
+
+              </td>
 
             </tr>
           {% endfor %}
 
           </tbody>
                  </table>
+
       </div><!--end of .table-responsive-->
+    <div class="pagination">
+    <span class="step-links">
+        {% if table_data.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ table_data.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ table_data.number }} of {{ table_data.paginator.num_pages }}.
+        </span>
+
+        {% if table_data.has_next %}
+            <a href="?page={{ table_data.next_page_number }}">next</a>
+            <a href="?page={{ table_data.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
     </div>
   </div>
 </div>
@@ -115,6 +148,18 @@ border-radius: 4px;
     <div class="container">
       <p class="navbar-text pull-left">© 2018 - Project Of MyXavier Coinn.
       </p>
+    </div>
 </div>
 </body>
 </html>
+
+<script>
+$('#search_go').click(function(){
+         var search_string  = $.trim($("#search").val());
+        if (search_string != ''){
+
+            new_url = "/?search_string="+search_string;
+          window.location = new_url
+        }
+    });
+</script>
