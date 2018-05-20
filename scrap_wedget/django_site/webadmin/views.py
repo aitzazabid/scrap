@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from client.models import CapWedget
-from client import table_dict
+from client import currency_dict
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
@@ -29,10 +29,18 @@ def home(request):
     })
 
 
-    # for rows in CW:
-    #     table_data.append(table_dict(rows))
-    # return render(request, TEMPLATES % 'widget', {
-    #     'table_data':table_data
-    # })
+def currency_detail(request):
+
+    currency = request.GET.get('currency')
+
+    CW = CapWedget.objects.get(is_removed=False,rank=currency)
+
+    currency_detail  = currency_dict(CW)
+
+    return render(request, TEMPLATES % 'currency_detail', {
+        'currency_detail': currency_detail
+    })
+
+
 
 

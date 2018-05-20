@@ -109,13 +109,15 @@ border-radius: 4px;
           </thead>
           <tbody>
           {% for row in table_data %}
+
+
             <tr>
-              <td>{{ forloop.counter }}</td>
+                <td>{{ forloop.counter }}</td>
               <td>{{ row.rank }}</td>
-              <td>{{ row.name }}</td>
-              <td>{{ row.market_cap|currency }}</td>
-              <td>{{ row.price|currency }}</td>
-              <td>{{ row.volume_24 }}</td>
+                <td><a href="/currency_detail?currency={{ row.rank }}">{{ row.name }}</a></td>
+                <td>{{ row.market_cap|currency }}</td>
+                <td><a href="/currency_detail?currency={{ row.rank }}">{{ row.price|currency }}</a></td>
+                <td><a href="/currency_detail?currency={{ row.rank }}">{{ row.volume_24 }}</a></td>
               <td>{{ row.circulatory_supply }}  {{ row.symbol }}</td>
               <td >{% if "-" in row.change %}
                   <span style="color: red">{{ row.change }} %</span>
@@ -139,6 +141,8 @@ border-radius: 4px;
                 </td>
 
             </tr>
+
+
           {% endfor %}
 
           </tbody>

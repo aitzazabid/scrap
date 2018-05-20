@@ -1,4 +1,9 @@
-def table_dict(row):
+def currency_dict(row):
+    max_supply = row.max_supply
+
+    if row.max_supply is not None:
+        max_supply = row.max_supply + "BTC"
+
 
 
     return{
@@ -9,7 +14,8 @@ def table_dict(row):
         'volume_24':row.volume_24,
         'circulatory_supply':row.circulatory_supply,
         'change':row.change,
-        'symbol':row.symbol
+        'symbol':row.symbol,
+        'max_supply':max_supply
 
 
     }
