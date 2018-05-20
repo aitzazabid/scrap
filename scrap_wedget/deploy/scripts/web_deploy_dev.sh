@@ -1,5 +1,5 @@
 #!/bin/bash
-cd $SCRAP_REPO/deploy
+cd /scrap/scrap_wedget/deploy
 
 echo "Copying systemd unit"
 sudo cp systemd/scrap-uwsgi.service /lib/systemd/system
