@@ -130,7 +130,7 @@ border-radius: 4px;
                         <script>
                             var myvalues = "{{ row.name |graph_values }}";
                             console.log('graph_values',myvalues);
-{#                            var myvalues = [5,6,7,9,9,5,3,2,2,4,6,7];#}
+                            var myvalues = [5,6,7,9,9,5,3,2,2,4,6,7,5,6,7,9,9,5,3,2,2,4,6,7,5,6,7,9,9,5,3,2,2,4,6,7];
                                 $('#dynamicsparkline'+{{ forloop.counter }}).sparkline(myvalues);
                         </script>
 
