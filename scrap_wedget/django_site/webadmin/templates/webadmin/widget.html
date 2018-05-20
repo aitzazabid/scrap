@@ -1,5 +1,6 @@
 {% load static %}
 {% load format_tags %}
+{% load admin_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
+
 </head>
 <style>
 a{
@@ -95,6 +103,7 @@ border-radius: 4px;
               <th>Volume (24h)</th>
               <th>Circulating Supply</th>
               <th>Change (24h)</th>
+              <th>Price Graph (7d)</th>
 
             </tr>
           </thead>
@@ -113,9 +122,21 @@ border-radius: 4px;
                   {% else %}
                 <span style="color: #96BD8E">{{ row.change }} %</span>
                   {% endif %}
-
-
               </td>
+
+                <td>
+                    <div >
+                    <span id="dynamicsparkline{{ forloop.counter }}">Loading..</span>
+                        <script>
+                            var myvalues = "{{ row.name |graph_values }}";
+                            console.log('graph_values',myvalues);
+{#                            var myvalues = [5,6,7,9,9,5,3,2,2,4,6,7];#}
+                                $('#dynamicsparkline'+{{ forloop.counter }}).sparkline(myvalues);
+                        </script>
+
+                    </div>
+
+                </td>
 
             </tr>
           {% endfor %}
@@ -162,4 +183,21 @@ $('#search_go').click(function(){
           window.location = new_url
         }
     });
+
+$('document').ready(function() {
+    console.log('dkf');
+
+});
+
+function show_graph(name,i) {
+console.log('na,w',name);
+{#    var graph_values = '{{name|graph_values }}';#}
+    console.log('graph_values',graph_values);
+    var myvalues = [5,6,7,9,9,5,3,2,2,4,6,7];
+        $('#dynamicsparkline'+i).sparkline(myvalues);
+}
+
+
+
+
 </script>

@@ -5,6 +5,7 @@ from client.api import *
 
 urlpatterns = [
     url('^coincap', coincap),
+    url('^coin_graph_values', coin_graph_values),
 ]
 
 
