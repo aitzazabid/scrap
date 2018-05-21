@@ -69,9 +69,10 @@ border-radius: 4px;
       </a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      <li class="menu active"><a style="padding:35px 20px">Home</a></li>
-      <li class="menu"><a style="padding:35px 20px">About</a></li>
-      <li class="menu"><a style="padding:35px 20px">Contact Us</a></li>
+      <li class="menu active"><a style="padding:35px 20px">Marcket Cap</a></li>
+      <li class="menu"><a style="padding:35px 20px">Trade Volume</a></li>
+      <li class="menu"><a style="padding:35px 20px">Trending</a></li>
+      <li class="menu"><a style="padding:35px 20px">Tool</a></li>
     </ul>
   </div>
 </nav>
@@ -104,6 +105,7 @@ border-radius: 4px;
               <th>Circulating Supply</th>
               <th>Change (24h)</th>
               <th>Price Graph (7d)</th>
+              <th></th>
 
             </tr>
           </thead>
@@ -130,16 +132,25 @@ border-radius: 4px;
                     <div >
                     <span id="dynamicsparkline{{ forloop.counter }}">Loading..</span>
                         <script>
-                            var myvalues = "{{ row.name |graph_values }}";
-                            console.log('graph_values',myvalues);
-                            var myvalues = [5,6,7,9,9,5,3,2,2,4,6,7,5,6,7,9,9,5,3,2,2,4,6,7,5,6,7,9,9,5,3,2,2,4,6,7];
-                                $('#dynamicsparkline'+{{ forloop.counter }}).sparkline(myvalues);
+                            var values = {{ row.name |graph_values }};
+
+{#                            var myvalues = [5,6,7,9,9,5,3,2,2,4,6,7,5,6,7,9,9,5,3,2,2,4,6,7,5,6,7,9,9,5,3,2,2,4,6,7];#}
+{#                            var myvalues = [5, 4, 9, 2, 6, 5, 7]#}
+                            var myvalues = values;
+                            var li = [];
+                            for (var i=0;i<values.length;i++){
+                                li.push(values[i])
+                            }
+                            console.log('graph_valuesdf',li);
+                            $('#dynamicsparkline'+{{ forloop.counter }}).sparkline(li);
                         </script>
 
                     </div>
 
                 </td>
-
+                <td>
+                    <button class="btn dropdown-toggle" type="button" id="dropdown-menu-1" data-toggle="dropdown">...</button>
+                </td>
             </tr>
 
 
@@ -196,8 +207,8 @@ $('document').ready(function() {
 function show_graph(name,i) {
 console.log('na,w',name);
 {#    var graph_values = '{{name|graph_values }}';#}
-    console.log('graph_values',graph_values);
-    var myvalues = [5,6,7,9,9,5,3,2,2,4,6,7];
+{#    console.log('graph_values',graph_values);#}
+{#    var myvalues = [5,6,7,9,9,5,3,2,2,4,6,7];#}
         $('#dynamicsparkline'+i).sparkline(myvalues);
 }
 

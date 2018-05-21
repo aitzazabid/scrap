@@ -15,7 +15,6 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
 
 </head>
 <style>
@@ -135,6 +134,14 @@ padding: 10px;
     border-top: 1px solid;
     font-weight: 900;
 }
+    .highcharts-credits {
+        display:none ;
+    }
+    .highcharts-button-symbol{
+        display:none ;
+    }
+
+
 </style>
 <body>
 <nav class="navbar" style="border-radius: 0px;">
@@ -146,9 +153,10 @@ padding: 10px;
       </a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      <li class="menu active"><a style="padding:35px 20px">Home</a></li>
-      <li class="menu"><a style="padding:35px 20px">About</a></li>
-      <li class="menu"><a style="padding:35px 20px">Contact Us</a></li>
+      <li class="menu active"><a style="padding:35px 20px">Marcket Cap</a></li>
+      <li class="menu"><a style="padding:35px 20px">Trade Volume</a></li>
+      <li class="menu"><a style="padding:35px 20px">Trending</a></li>
+      <li class="menu"><a style="padding:35px 20px">Tool</a></li>
     </ul>
   </div>
 </nav>
@@ -202,9 +210,20 @@ padding: 10px;
 <li class=""><a href="#markets" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-transfer text-gray"></span> Markets</a></li>
 <li><a href="#social" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-globe text-gray"></span> Social</a></li>
 <li><a href="#tools" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-wrench text-gray"></span> Tools</a></li>
-<li><a href="/currencies/bitcoin/historical-data/"><span class="glyphicon glyphicon-calendar text-gray"></span>&nbsp;Historical Data</a></li>
+<li><a href="#historical"><span class="glyphicon glyphicon-calendar text-gray"></span>&nbsp;Historical Data</a></li>
 </ul>
 </div>
+    <div class="col-xs-12 tab-content">
+<div id="charts" class="tab-pane active">
+<div class="tab-header">
+{#<div id="highcharts-loading" class="text-center" >Loading data from server...<div><span class="loading"></span></div></div>#}
+{#<div id="highcharts-nodata" class="hidden text-center">No chart data found</div>#}
+<div class="clear"></div>
+    <div id="container" style="height: 400px; min-width: 380px"></div>
+
+</div>
+</div>
+    </div>
 
 
 </div>
@@ -212,5 +231,66 @@ padding: 10px;
 </html>
 
 <script>
+    $.getJSON(
+    'https://cdn.rawgit.com/highcharts/highcharts/057b672172ccc6c08fe7dbb27fc17ebca3f5b770/samples/data/usdeur.json',
+    function (data) {
+
+        Highcharts.chart('container', {
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: 'Chart'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+            },
+            xAxis: {
+                type: 'datetime'
+            },
+            yAxis: {
+                title: {
+                    text: 'Exchange rate'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+
+            series: [{
+                type: 'area',
+                name: 'Chart',
+                data: data
+            }]
+        });
+    }
+);
 
 </script>
